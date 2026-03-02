@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 风格变量 - 根据主题切换 */
+        :root {
+            --bg-primary: #0a0a0f;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --accent: #00d4ff;
+            --accent-secondary: #ff006e;
+            --gradient-1: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
+        }
+
+        /* 科技蓝（默认） */
+        .style-tech { --bg-primary: #0a0a0f; --text-primary: #ffffff; --text-secondary: #a0a0b0; --accent: #00d4ff; --accent-secondary: #ff006e; --gradient-1: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%); }
+
+        /* 粉紫 */
+        .style-pink { --bg-primary: #1a0a1e; --text-primary: #ffffff; --text-secondary: #b0a0b8; --accent: #ff6b9d; --accent-secondary: #c084fc; --gradient-1: linear-gradient(135deg, #ff6b9d 0%, #c084fc 100%); }
+
+        /* 橙红 */
+        .style-orange { --bg-primary: #1a0f0a; --text-primary: #ffffff; --text-secondary: #b0a0a0; --accent: #ff9f43; --accent-secondary: #ee5a24; --gradient-1: linear-gradient(135deg, #ff9f43 0%, #ee5a24 100%); }
+
+        /* 暗黑 */
+        .style-dark { --bg-primary: #0a0a0a; --text-primary: #ffffff; --text-secondary: #808080; --accent: #ffffff; --accent-secondary: #cccccc; --gradient-1: linear-gradient(135deg, #ffffff 0%, #888888 100%); }
+
+        /* 白底 */
+        .style-white { --bg-primary: #ffffff; --text-primary: #000000; --text-secondary: #666666; --accent: #000000; --accent-secondary: #333333; --gradient-1: linear-gradient(135deg, #000000 0%, #444444 100%); }
+
+        /* 金色 */
+        .style-gold { --bg-primary: #1a1510; --text-primary: #ffffff; --text-secondary: #b0a090; --accent: #ffd700; --accent-secondary: #ffaa00; --gradient-1: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%); }
+
+        /* 氧气/清新 */
+        .style-fresh { --bg-primary: #fdfcfb; --text-primary: #2d3436; --text-secondary: #636e72; --accent: #fd79a8; --accent-secondary: #00cec9; --gradient-1: linear-gradient(135deg, #fd79a8 0%, #a29bfe 50%, #00cec9 100%); }
+
+        /* 商务橙 - 参考一人公司操作系统PDF */
+        .style-business { --bg-primary: #fafaf8; --text-primary: #1a1a1a; --text-secondary: #666666; --accent: #ff6b35; --accent-secondary: #ff8c5a; --gradient-1: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%); }
+
+        /* 自然绿 - 参考sample文件夹清单风格 */
+        .style-nature { --bg-primary: #f8faf5; --text-primary: #1a2e1a; --text-secondary: #4a5d4a; --accent: #2d8a4e; --accent-secondary: #5cb85c; --gradient-1: linear-gradient(135deg, #2d8a4e 0%, #5cb85c 100%); }
+
+        /* 电影 - 参考PPT设计提示词，深色沉浸+流畅动画 */
+        .style-cinematic { --bg-primary: #0a0a12; --text-primary: #ffffff; --text-secondary: #a0a0b0; --accent: #ff6b4a; --accent-secondary: #4af0c8; --gradient-1: linear-gradient(135deg, #ff6b4a 0%, #ff9f6b 100%); }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #000;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: auto;
+        }
+
+        .slides-wrapper { display: flex; flex-direction: column; gap: 0; }
+
+        .slide {
+            width: 600px;
+            height: 800px;
+            background: var(--bg-primary);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .slide-content { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+
+        .bg-grid { position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, rgba(0,212,255,0.03) 1px, transparent 0); background-size: 25px 25px; pointer-events: none; }
+
+        .bg-glow { position: absolute; width: 150px; height: 150px; border-radius: 50%; filter: blur(60px); opacity: 0.3; pointer-events: none; }
+        .bg-glow-1 { top: -30px; right: -30px; background: var(--accent); }
+        .bg-glow-2 { bottom: -30px; left: -30px; background: var(--accent-secondary); }
+
+        .line-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+
+        h1 { font-size: 36px; font-weight: 900; margin-bottom: 16px; color: var(--accent); }
+        h2 { font-size: 32px; font-weight: 700; margin-bottom: 16px; color: var(--accent); }
+        p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+
+        .quote { font-size: 14px; font-style: italic; border-left: 3px solid var(--accent); padding-left: 12px; }
+        .highlight { color: var(--accent); font-weight: 600; }
+        .tagline { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+
+        ul { list-style: none; margin: 12px 0; }
+        li { font-size: 14px; color: var(--text-secondary); padding: 4px 0; padding-left: 16px; position: relative; }
+        li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
+
+        /* 自然绿风格使用勾选符号 */
+        .style-nature li::before { content: '✓'; }
+
+        /* 电影风格 - 沉浸式动画 */
+        .style-cinematic { --title-size: 48px; --h2-size: 36px; }
+        .style-cinematic h1 { font-size: 48px; font-weight: 900; letter-spacing: -1px; }
+        .style-cinematic h2 { font-size: 36px; font-weight: 700; }
+        .style-cinematic .slide { background: linear-gradient(135deg, #0a0a12 0%, #12121f 100%); }
+        .style-cinematic .slide-content { animation: cinematicFade 0.8s ease-out; }
+        @keyframes cinematicFade {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .style-cinematic li { transition: transform 0.3s ease; }
+        .style-cinematic li:hover { transform: translateX(8px); }
+
+        table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 12px 0; }
+        th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { color: var(--accent); font-weight: 600; border-bottom: 2px solid var(--accent); }
+
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .slide-footer { position: absolute; bottom: 20px; right: 30px; font-size: 11px; color: var(--text-secondary); opacity: 0.4; }
+        .center-text { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="slides-wrapper">
+        <!-- Slide 1: 封面 -->
+        <div class="slide style-tech" id="slide-1">
+            <div class="bg-grid"></div>
+            <div class="bg-glow bg-glow-1"></div>
+            <div class="slide-content">
+                <span class="tagline">分类标签</span>
+                <h1>标题</h1>
+                <p>副标题</p>
+                <blockquote class="quote" style="margin-top: 24px;">引言</blockquote>
+            </div>
+            <div class="slide-footer">01</div>
+        </div>
+
+        <!-- Slide 2: 内容页 -->
+        <div class="slide style-tech" id="slide-2">
+            <div class="bg-grid"></div>
+            <div class="slide-content">
+                <h2>一级标题</h2>
+                <p style="margin-top: 16px;">正文内容...</p>
+            </div>
+            <div class="slide-footer">02</div>
+        </div>
+    </div>
+</body>
+</html>
